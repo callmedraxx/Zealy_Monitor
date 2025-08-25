@@ -1,0 +1,56 @@
+{
+  "rewards": [
+    {
+      "method": {
+        "type": "all"
+      },
+      "type": "xp",
+      "value": 100,
+      "status": "unspecified"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "30fa362c-f328-4ec2-90a7-b3ced79de75a", - this is taskid
+      "type": "tweetReact",
+      "metadata": {
+        "content": "It’s motivating to see our new products bringing value to the community!\n\nWe’ve completed our first Farmdrop distribution — and new Farmdrop opportunities are on the way.\n\nOpportunities come to those who are ready😎\n\nDon’t miss the next opportunities — complete your KYC now: https://t.co/ERzeWfdKfN",
+        "creator": {
+          "id": "1502574159217504258",
+          "name": "Finceptor",
+          "imageUrl": "https://pbs.twimg.com/profile_images/1876575059457769472/wrSMPJwf_normal.jpg",
+          "username": "FinceptorApp",
+          "createdAt": "2022-03-12T09:17:46.000Z"
+        },
+        "tweetId": "1918595567271166161",
+        "createdAt": "2025-05-03T09:16:43.000Z",
+        "editHistoryTweetIds": [
+          "1918595567271166161"
+        ]
+      },
+      "settings": {
+        "actions": [
+          "like",
+          "reply",
+          "retweet"
+        ],
+        "tweetUrl": "https://x.com/FinceptorApp/status/1918595567271166161"
+      }
+    }
+  ],
+  "id": "8238fae9-4c6a-4637-ba1d-3c0924b73fcf", - this is quest_id
+  "name": "new products",
+  "position": 814,
+  "categoryId": "88cc8e0b-e075-4189-a097-89e94aa2d093", - this is box_id
+  "canRetry": true,
+  "claimed": false,
+  "completed": false,
+  "inReview": false,
+  "claimLimit": 0,
+  "retryAfter": 0,
+  "recurrence": "once",
+  "conditions": [],
+  "conditionOperator": "AND",
+  "locked": false,
+  "opened": true
+}
