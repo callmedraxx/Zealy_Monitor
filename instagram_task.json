@@ -1,0 +1,173 @@
+{
+  "id": "e626d4c8-bdf4-4289-935f-f9a7bf3a661b",
+  "name": "Comment and like this recent instagram post from Reef.",
+  "position": 107,
+  "categoryId": "38713256-55a2-4420-87b0-24dfc8e1dc6e",
+  "description": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "heading",
+        "attrs": { "level": 3 },
+        "content": [{ "type": "text", "text": "MISSION 🎯" }]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "text": "Help Reef chain trend and gain awareness in the Instagram space. " }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "text": "Comment and like this recent instagram post from Reef." }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "text": "GUIDE", "marks": [{ "type": "bold" }] }
+        ]
+      },
+      {
+        "type": "orderedList",
+        "attrs": { "type": null, "start": 1 },
+        "content": [
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  { "type": "text", "text": "Click on this" },
+                  {
+                    "type": "text",
+                    "text": " link",
+                    "marks": [
+                      {
+                        "type": "link",
+                        "attrs": {
+                          "rel": "noopener noreferrer nofollow",
+                          "href": "https://www.instagram.com/reef.io/p/DNAGca9iSAr/",
+                          "class": null,
+                          "target": "_blank"
+                        }
+                      }
+                    ]
+                  },
+                  { "type": "text", "text": " which will take you to the Reef instagram post" }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  { "type": "text", "text": "Post a relevant comment to this post. It must be relevant to the topic of the post." }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [{ "type": "text", "text": "Like the post." }]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Take 2 x screen shots which mush show your comment and like on this Reef instagram post. Upload the two screen shots to Zealy as proof."
+                  },
+                  { "type": "hardBreak" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": { "level": 3 },
+        "content": [{ "type": "text", "text": "SUBMISSION 📝" }]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Take 2 x screen shots which mush show your comment and like on this Reef instagram post. Upload the two screen shots to Zealy as proof. "
+          }
+        ]
+      }
+    ]
+  },
+  "rewards": [
+    {
+      "method": { "type": "all" },
+      "type": "xp",
+      "value": 40,
+      "status": "unspecified"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "859d567e-8d25-40b7-b092-794ed74451ec",
+      "type": "file",
+      "settings": {
+        "fileTypes": ["image"],
+        "maxFileSize": 10000000,
+        "maxFileCount": 2,
+        "autoValidated": false,
+        "restrictFileType": true
+      }
+    }
+  ],
+  "canRetry": true,
+  "claimed": false,
+  "completed": false,
+  "inReview": false,
+  "claimLimit": 0,
+  "retryAfter": 0,
+  "recurrence": "once",
+  "conditions": [
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "43d4e1b3-6317-4e38-aa62-2a00a19f438b",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "bb5088aa-0ddc-48d1-b174-19d927f0ec52",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "0089699f-f937-43b4-b2e1-557f9f690a1f",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "165ffed7-3898-4346-a8f2-623b142b433b",
+      "operator": "isCompleted"
+    }
+  ],
+  "conditionOperator": "AND",
+  "locked": false,
+  "opened": true
+}

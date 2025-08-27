@@ -11,7 +11,7 @@
   ],
   "tasks": [
     {
-      "id": "30fa362c-f328-4ec2-90a7-b3ced79de75a", - this is taskid
+      "id": "30fa362c-f328-4ec2-90a7-b3ced79de75a",
       "type": "tweetReact",
       "metadata": {
         "content": "It’s motivating to see our new products bringing value to the community!\n\nWe’ve completed our first Farmdrop distribution — and new Farmdrop opportunities are on the way.\n\nOpportunities come to those who are ready😎\n\nDon’t miss the next opportunities — complete your KYC now: https://t.co/ERzeWfdKfN",
@@ -38,10 +38,10 @@
       }
     }
   ],
-  "id": "8238fae9-4c6a-4637-ba1d-3c0924b73fcf", - this is quest_id
+  "id": "8238fae9-4c6a-4637-ba1d-3c0924b73fcf",
   "name": "new products",
   "position": 814,
-  "categoryId": "88cc8e0b-e075-4189-a097-89e94aa2d093", - this is box_id
+  "categoryId": "88cc8e0b-e075-4189-a097-89e94aa2d093",
   "canRetry": true,
   "claimed": false,
   "completed": false,
