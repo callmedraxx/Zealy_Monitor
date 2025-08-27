@@ -39,7 +39,7 @@ file_upload = f"https://api-v1.zealy.io/files"
 
 # 🔎 Filters
 params = {
-    "filters": ["locked", "available", "inCooldown", "inReview"]
+    "filters": ["locked", "available", "inCooldown"]  # Removed "inReview" to avoid refinding claimed quests
 }
 
 # 🔐 DEFAULT HEADERS (will be copied per-account; replace Cookie per account)
@@ -331,7 +331,20 @@ def monitor_account(account):
     print(f"Using cookie: {account_cookie[:30]}... (length {len(account_cookie)})")
     session = make_session_with_cookie(account_cookie)
     sessions[account_name] = session
-    seen_local = set()
+    
+    # Load previously seen quests from file
+    seen_file = f'uploads/{account_name}/seen_quests.json'
+    os.makedirs(os.path.dirname(seen_file), exist_ok=True)
+    if os.path.exists(seen_file):
+        with open(seen_file) as f:
+            seen_local = set(json.load(f))
+    else:
+        seen_local = set()
+    
+    def save_seen():
+        with open(seen_file, 'w') as f:
+            json.dump(list(seen_local), f)
+    
     executor_local = ThreadPoolExecutor(max_workers=MAX_WORKERS)
     local_fetch_count = 1
 
@@ -377,6 +390,7 @@ def monitor_account(account):
                         if task_type == "tweetReact":
                             logging.info("[%s] Claiming: %s", account_name, quest_title)
                             seen_local.add(quest_id)
+                            save_seen()
                             executor_local.submit(claim_and_notify_for_account, session, account_name, box_id, quest_id, task_id, quest_title, frontend, task_type)
                         elif task_type == "file" and is_instagram_task(quest_data):
                             instagram_links = extract_instagram_links(quest_data)
@@ -389,6 +403,7 @@ def monitor_account(account):
                                     if file_urls:
                                         logging.info("[%s] Match found for %s, claiming: %s with URLs: %s", account_name, ig_link, quest_title, file_urls)
                                         seen_local.add(quest_id)
+                                        save_seen()
                                         executor_local.submit(claim_and_notify_for_account, session, account_name, box_id, quest_id, task_id, quest_title, frontend, task_type, file_urls, ig_link)
                                         break
                                 else:
