@@ -1,0 +1,197 @@
+{
+  "rewards": [
+    {
+      "method": {
+        "type": "all"
+      },
+      "type": "xp",
+      "value": 10,
+      "status": "unspecified"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "68f08f2d-4eba-4f79-8f41-d1f72a5a4540", - taskid
+      "type": "url",
+      "settings": {
+        "title": "",
+        "description": "Submission.\n\nPost the URL to your comment for review. ",
+        "autoValidated": false
+      }
+    }
+  ],
+  "id": "db12a997-b3b0-4a76-a9a3-93a594aa3594", - questid
+  "name": "Reef X Post - Comment on this recent post from Reef Chain.",
+  "position": 19,
+  "categoryId": "7150e1e9-f534-4576-b5d2-bd412433b949", -boxid
+  "description": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "text": "Mission.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Exapand the exposure and engagement on the offical @Reef_Chain X account.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Reef X Post - Comment on this recent post from Reef Chain.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "text": "Guide.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "1) Click on this link for a recent post from Reef.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph"
+      },
+      {
+        "type": "tweet",
+        "attrs": {
+          "src": "https://x.com/reef_chain/status/1962547436305404213?s=46&t=fIY_A7XT_VtkQTfu_IhsYw",
+          "tweetId": "1962547436305404213"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "?s=46&t=fIY_A7XT_VtkQTfu_IhsYw",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "rel": "noopener noreferrer nofollow",
+                  "href": "https://x.com/reef_chain/status/1962547436305404213?s=46&t=fIY_A7XT_VtkQTfu_IhsYw",
+                  "class": null,
+                  "target": "_blank"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "2) Comment on this post and write something informative regaring the topic of this post. Use the relevant hashtags #Reef @Reef_Chain",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "3) No spammy, or copy and paste posts. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "text": "Submission.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Post the URL to your comment for review. ",
+            "type": "text"
+          },
+          {
+            "type": "hardBreak"
+          }
+        ]
+      }
+    ]
+  },
+  "canRetry": true,
+  "claimed": false,
+  "completed": false,
+  "inReview": false,
+  "claimLimit": 0,
+  "retryAfter": 0,
+  "recurrence": "once",
+  "conditions": [
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "43d4e1b3-6317-4e38-aa62-2a00a19f438b",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "bb5088aa-0ddc-48d1-b174-19d927f0ec52",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "0089699f-f937-43b4-b2e1-557f9f690a1f",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "165ffed7-3898-4346-a8f2-623b142b433b",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "date",
+      "value": "2025-06-16T18:30:00.000Z",
+      "operator": ">"
+    }
+  ],
+  "conditionOperator": "AND",
+  "locked": false,
+  "opened": true
+}

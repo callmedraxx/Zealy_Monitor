@@ -156,146 +156,6 @@ def is_instagram_task(quest_data):
                                 return True
     return False
 
-def is_reddit_task(quest_data):
-    """Check if the quest is a Reddit task based on name or description."""
-    name = quest_data.get("name", "").lower()
-    if "reddit" in name:
-        return True
-    
-    # Check description for reddit links or mentions
-    desc = quest_data.get("description", {})
-    content = desc.get("content", [])
-    for item in content:
-        if item.get("type") == "paragraph":
-            for sub in item.get("content", []):
-                text = sub.get("text", "").lower()
-                if "reddit" in text:
-                    return True
-                if sub.get("marks"):
-                    for mark in sub.get("marks", []):
-                        if mark.get("type") == "link":
-                            href = mark.get("attrs", {}).get("href", "")
-                            if "reddit.com" in href:
-                                return True
-    return False
-
-def extract_reddit_links(quest_data):
-    """Extract Reddit links from the quest description."""
-    links = []
-    desc = quest_data.get("description", {})
-    content = desc.get("content", [])
-    
-    def extract_from_content(content_list):
-        """Recursively extract links from content list."""
-        for item in content_list:
-            item_type = item.get("type")
-            
-            # Handle paragraphs
-            if item_type == "paragraph":
-                for sub in item.get("content", []):
-                    if sub.get("marks"):
-                        for mark in sub.get("marks", []):
-                            if mark.get("type") == "link":
-                                href = mark.get("attrs", {}).get("href", "")
-                                if "reddit.com" in href:
-                                    links.append(href)
-                    # Also check for nested content
-                    if sub.get("content"):
-                        extract_from_content(sub.get("content", []))
-            
-            # Handle lists (orderedList, bulletList)
-            elif item_type in ["orderedList", "bulletList"]:
-                for list_item in item.get("content", []):
-                    if list_item.get("type") == "listItem":
-                        extract_from_content(list_item.get("content", []))
-            
-            # Handle other nested content
-            elif item.get("content"):
-                extract_from_content(item.get("content", []))
-    
-    extract_from_content(content)
-    return links
-
-def is_x_url_task(quest_data):
-    """Check if the quest is an X/Twitter URL task based on description content."""
-    # Check task type first
-    tasks = quest_data.get("tasks", [])
-    has_url_task = any(task.get("type") == "url" for task in tasks)
-    if not has_url_task:
-        return False
-    
-    # Check description for X/Twitter URL submission keywords
-    desc = quest_data.get("description", {})
-    content = desc.get("content", [])
-    
-    def check_content(content_list):
-        for item in content_list:
-            if item.get("type") == "paragraph":
-                for sub in item.get("content", []):
-                    text = sub.get("text", "").lower()
-                    # Look for keywords indicating URL submission for X/Twitter
-                    if any(keyword in text for keyword in [
-                        "post the url to your comment",
-                        "submit the url",
-                        "x comment",
-                        "twitter comment",
-                        "comment url",
-                        "url to your comment"
-                    ]):
-                        return True
-                    if sub.get("content"):
-                        if check_content(sub.get("content", [])):
-                            return True
-            elif item.get("content"):
-                if check_content(item.get("content", [])):
-                    return True
-        return False
-    
-    return check_content(content)
-
-def extract_x_links(quest_data):
-    """Extract X/Twitter links from the quest description."""
-    links = []
-    desc = quest_data.get("description", {})
-    content = desc.get("content", [])
-    
-    def extract_from_content(content_list):
-        """Recursively extract X/Twitter links from content list."""
-        for item in content_list:
-            item_type = item.get("type")
-            
-            # Handle tweet embeds
-            if item_type == "tweet":
-                src = item.get("attrs", {}).get("src", "")
-                if src and ("x.com" in src or "twitter.com" in src):
-                    links.append(src)
-            
-            # Handle paragraphs
-            elif item_type == "paragraph":
-                for sub in item.get("content", []):
-                    if sub.get("marks"):
-                        for mark in sub.get("marks", []):
-                            if mark.get("type") == "link":
-                                href = mark.get("attrs", {}).get("href", "")
-                                if "x.com" in href or "twitter.com" in href:
-                                    links.append(href)
-                    # Also check for nested content
-                    if sub.get("content"):
-                        extract_from_content(sub.get("content", []))
-            
-            # Handle lists (orderedList, bulletList)
-            elif item_type in ["orderedList", "bulletList"]:
-                for list_item in item.get("content", []):
-                    if list_item.get("type") == "listItem":
-                        extract_from_content(list_item.get("content", []))
-            
-            # Handle other nested content
-            elif item.get("content"):
-                extract_from_content(item.get("content", []))
-    
-    extract_from_content(content)
-    return links
-
 def extract_instagram_links(quest_data):
     """Extract Instagram links from the quest description."""
     links = []
@@ -345,30 +205,6 @@ def check_match(account_name, ig_link):
             return links[ig_link]  # Return the list of URLs [url1, url2]
     return None
 
-def check_reddit_match(account_name, reddit_link):
-    """Check if the Reddit link matches any stored link for the account and return URLs if found."""
-    logging.info(f"Checking Reddit match for {account_name} and link {reddit_link}")
-    json_path = f'uploads/{account_name}/reddit_links.json'
-    if os.path.exists(json_path):
-        with open(json_path) as f:
-            links = json.load(f)
-            logging.info(f"Found Reddit links for {account_name}: {links}")
-        if reddit_link in links:
-            return links[reddit_link]  # Return the list of URLs (usually just one for Reddit)
-    return None
-
-def check_x_match(account_name, x_link):
-    """Check if the X/Twitter link matches any stored link for the account and return comment URL if found."""
-    logging.info(f"Checking X match for {account_name} and link {x_link}")
-    json_path = f'uploads/{account_name}/x_links.json'
-    if os.path.exists(json_path):
-        with open(json_path) as f:
-            links = json.load(f)
-            logging.info(f"Found X links for {account_name}: {links}")
-        if x_link in links:
-            return links[x_link]  # Return the comment URL
-    return None
-
 def remove_claimed_link(account_name, instagram_link):
     """Remove a claimed Instagram link and its URLs from the JSON file."""
     json_path = f'uploads/{account_name}/links.json'
@@ -386,42 +222,6 @@ def remove_claimed_link(account_name, instagram_link):
                 logging.warning("[%s] Link not found in JSON for removal: %s", account_name, instagram_link)
         except Exception as e:
             logging.error("[%s] Error removing link from JSON: %s", account_name, e)
-
-def remove_claimed_reddit_link(account_name, reddit_link):
-    """Remove a claimed Reddit link and its URLs from the JSON file."""
-    json_path = f'uploads/{account_name}/reddit_links.json'
-    if os.path.exists(json_path):
-        try:
-            with open(json_path, 'r') as f:
-                links = json.load(f)
-            
-            if reddit_link in links:
-                del links[reddit_link]
-                with open(json_path, 'w') as f:
-                    json.dump(links, f, indent=2)
-                logging.info("[%s] Removed claimed Reddit link from JSON: %s", account_name, reddit_link)
-            else:
-                logging.warning("[%s] Reddit link not found in JSON for removal: %s", account_name, reddit_link)
-        except Exception as e:
-            logging.error("[%s] Error removing Reddit link from JSON: %s", account_name, e)
-
-def remove_claimed_x_link(account_name, x_link):
-    """Remove a claimed X/Twitter link from the JSON file."""
-    json_path = f'uploads/{account_name}/x_links.json'
-    if os.path.exists(json_path):
-        try:
-            with open(json_path, 'r') as f:
-                links = json.load(f)
-            
-            if x_link in links:
-                del links[x_link]
-                with open(json_path, 'w') as f:
-                    json.dump(links, f, indent=2)
-                logging.info("[%s] Removed claimed X link from JSON: %s", account_name, x_link)
-            else:
-                logging.warning("[%s] X link not found in JSON for removal: %s", account_name, x_link)
-        except Exception as e:
-            logging.error("[%s] Error removing X link from JSON: %s", account_name, e)
 
 
 def claim_and_notify_for_account(session, account_name, box_id, quest_id, task_id, quest_title, frontend_url_local, task_type, file_urls=None, instagram_link=None):
@@ -456,85 +256,19 @@ def claim_and_notify_for_account(session, account_name, box_id, quest_id, task_i
         logging.exception(msg)
         send_telegram_message(msg)
 
-def claim_reddit_task(session, account_name, box_id, quest_id, task_id, quest_title, frontend_url_local, file_urls, reddit_link):
-    """Specific function to claim Reddit tasks with file URLs."""
-    claim_url = claim_url_template.format(quest_id=quest_id)
-    payload = {"taskValues": [{"taskId": task_id, "fileUrls": file_urls, "type": "file"}]}
-    
-    try:
-        res = session.post(claim_url, json=payload, timeout=10)
-        if res.status_code == 200:
-            msg = f"✅ [{account_name}] Claimed Reddit task: {quest_title}"
-            logging.info(msg)
-            print(msg)
-            send_telegram_message(msg)
-            
-            # Clean up the used Reddit link from JSON after successful claim
-            remove_claimed_reddit_link(account_name, reddit_link)
-        else:
-            msg = f"❌ [{account_name}] Failed to claim Reddit task: {quest_title} → {res.status_code} → {res.text}\nURL: {frontend_url_local}"
-            logging.warning(msg)
-            send_telegram_message(msg)
-    except Exception as e:
-        msg = f"❌ [{account_name}] Error claiming Reddit task {quest_title}: {e}\nURL: {frontend_url_local}"
-        logging.exception(msg)
-        send_telegram_message(msg)
-
-def claim_x_task(session, account_name, box_id, quest_id, task_id, quest_title, frontend_url_local, comment_url, x_link):
-    """Specific function to claim X/Twitter URL tasks with comment URL."""
-    claim_url = claim_url_template.format(quest_id=quest_id)
-    payload = {"taskValues": [{"taskId": task_id, "value": comment_url, "type": "url"}]}
-    
-    try:
-        res = session.post(claim_url, json=payload, timeout=10)
-        if res.status_code == 200:
-            msg = f"✅ [{account_name}] Claimed X task: {quest_title}"
-            logging.info(msg)
-            print(msg)
-            send_telegram_message(msg)
-            
-            # Clean up the used X link from JSON after successful claim
-            remove_claimed_x_link(account_name, x_link)
-        else:
-            msg = f"❌ [{account_name}] Failed to claim X task: {quest_title} → {res.status_code} → {res.text}\nURL: {frontend_url_local}"
-            logging.warning(msg)
-            send_telegram_message(msg)
-    except Exception as e:
-        msg = f"❌ [{account_name}] Error claiming X task {quest_title}: {e}\nURL: {frontend_url_local}"
-        logging.exception(msg)
-        send_telegram_message(msg)
-
 
 @app.route('/')
 def index():
     html = '''
     <html>
     <body>
-    <h1>Upload Links and Images</h1>
-    
-    <h2>Instagram Upload</h2>
+    <h1>Upload Instagram Link and Images</h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
         Account Name: <input type="text" name="account_name" required><br>
         Instagram Link: <input type="text" name="link" required><br>
         Image 1: <input type="file" name="image1" accept="image/*" required><br>
         Image 2: <input type="file" name="image2" accept="image/*" required><br>
-        <input type="submit" value="Upload Instagram">
-    </form>
-    
-    <h2>Reddit Upload</h2>
-    <form action="/upload_reddit" method="post" enctype="multipart/form-data">
-        Account Name: <input type="text" name="account_name" required><br>
-        Reddit Link: <input type="text" name="link" required><br>
-        Screenshot: <input type="file" name="image" accept="image/*" required><br>
-        <input type="submit" value="Upload Reddit">
-    </form>
-    
-    <h2>X/Twitter Upload</h2>
-    <form action="/upload_x" method="post">
-        Account Name: <input type="text" name="account_name" required><br>
-        X Tweet Link: <input type="text" name="x_link" required><br>
-        Comment URL: <input type="text" name="comment_url" required><br>
-        <input type="submit" value="Upload X Link">
+        <input type="submit" value="Upload">
     </form>
     </body>
     </html>
@@ -585,63 +319,6 @@ def upload():
         json.dump(links, f)
     
     return f'Uploaded for {account_name}: {link} with URLs {url1}, {url2}'
-
-@app.route('/upload_reddit', methods=['POST'])
-def upload_reddit():
-    account_name = request.form['account_name']
-    link = request.form['link']
-    image = request.files['image']
-    
-    # Get session for the account
-    session = sessions.get(account_name)
-    if not session:
-        return f'Session for account {account_name} not found. Please ensure the bot is running and monitoring this account.'
-    
-    # Upload image using the same session
-    files_url = f"https://api-v1.zealy.io/files"
-    
-    # Upload screenshot
-    files = {'file': (image.filename, image.stream, image.mimetype)}
-    response = session.post(files_url, files=files)
-    if response.status_code != 200:
-        return f'Failed to upload screenshot: {response.text}'
-    url = response.json()['url']
-    logging.info("[%s] Uploaded Reddit screenshot: %s -> %s", account_name, image.filename, url)
-    
-    # Save Reddit links and URLs
-    json_path = f'uploads/{account_name}/reddit_links.json'
-    os.makedirs(os.path.dirname(json_path), exist_ok=True)
-    if os.path.exists(json_path):
-        with open(json_path) as f:
-            links = json.load(f)
-    else:
-        links = {}
-    links[link] = [url]  # Reddit tasks usually need only one screenshot
-    with open(json_path, 'w') as f:
-        json.dump(links, f)
-    
-    return f'Uploaded Reddit for {account_name}: {link} with URL {url}'
-
-@app.route('/upload_x', methods=['POST'])
-def upload_x():
-    account_name = request.form['account_name']
-    x_link = request.form['x_link']
-    comment_url = request.form['comment_url']
-    
-    # Save X links and comment URLs (no file upload needed for X tasks)
-    json_path = f'uploads/{account_name}/x_links.json'
-    os.makedirs(os.path.dirname(json_path), exist_ok=True)
-    if os.path.exists(json_path):
-        with open(json_path) as f:
-            links = json.load(f)
-    else:
-        links = {}
-    links[x_link] = comment_url  # Map X tweet link to comment URL
-    with open(json_path, 'w') as f:
-        json.dump(links, f)
-    
-    logging.info("[%s] Stored X link mapping: %s -> %s", account_name, x_link, comment_url)
-    return f'Uploaded X link mapping for {account_name}: {x_link} -> {comment_url}'
 
 def monitor_account(account):
     """Run the monitoring loop for a single account.
@@ -733,42 +410,6 @@ def monitor_account(account):
                                     logging.info("[%s] No match for Instagram links: %s", account_name, instagram_links)
                             else:
                                 logging.info("[%s] File task but no Instagram links: %s", account_name, quest_title)
-                        elif task_type == "file" and is_reddit_task(quest_data):
-                            reddit_links = extract_reddit_links(quest_data)
-                            logging.info("[%s] Reddit links found: %s", account_name, reddit_links)
-                            print(f"Reddit links found: {reddit_links}")
-                            if reddit_links:
-                                logging.info("[%s] Reddit task found: %s, links: %s", account_name, quest_title, reddit_links)
-                                for reddit_link in reddit_links:
-                                    file_urls = check_reddit_match(account_name, reddit_link)
-                                    if file_urls:
-                                        logging.info("[%s] Match found for %s, claiming: %s with URLs: %s", account_name, reddit_link, quest_title, file_urls)
-                                        seen_local.add(quest_id)
-                                        save_seen()
-                                        executor_local.submit(claim_reddit_task, session, account_name, box_id, quest_id, task_id, quest_title, frontend, file_urls, reddit_link)
-                                        break
-                                else:
-                                    logging.info("[%s] No match for Reddit links: %s", account_name, reddit_links)
-                            else:
-                                logging.info("[%s] File task but no Reddit links: %s", account_name, quest_title)
-                        elif task_type == "url" and is_x_url_task(quest_data):
-                            x_links = extract_x_links(quest_data)
-                            logging.info("[%s] X links found: %s", account_name, x_links)
-                            print(f"X links found: {x_links}")
-                            if x_links:
-                                logging.info("[%s] X task found: %s, links: %s", account_name, quest_title, x_links)
-                                for x_link in x_links:
-                                    comment_url = check_x_match(account_name, x_link)
-                                    if comment_url:
-                                        logging.info("[%s] Match found for %s, claiming: %s with comment URL: %s", account_name, x_link, quest_title, comment_url)
-                                        seen_local.add(quest_id)
-                                        save_seen()
-                                        executor_local.submit(claim_x_task, session, account_name, box_id, quest_id, task_id, quest_title, frontend, comment_url, x_link)
-                                        break
-                                else:
-                                    logging.info("[%s] No match for X links: %s", account_name, x_links)
-                            else:
-                                logging.info("[%s] URL task but no X links: %s", account_name, quest_title)
                         else:
                             logging.info("[%s] Non-tweetReact task: %s", account_name, quest_title)
 

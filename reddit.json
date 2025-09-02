@@ -1,0 +1,169 @@
+{
+  "rewards": [
+    {
+      "method": {
+        "type": "all"
+      },
+      "type": "xp",
+      "value": 10,
+      "status": "unspecified"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "ca575830-8387-4863-bac9-3c9fb449f2e8", - this is the task id
+      "type": "file",
+      "settings": {
+        "maxFileSize": 5000000,
+        "maxFileCount": 1,
+        "autoValidated": false,
+        "restrictFileType": false
+      }
+    }
+  ],
+  "id": "ec35c781-d564-4a12-9bf4-cf71dfcb1553", - this is the quest id
+  "name": "Upvote this Reef Reddit post.",
+  "position": 5,
+  "categoryId": "dced0af8-6bda-46f1-9b86-08f02fdc0746", - this is the boxid
+  "description": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3
+        },
+        "content": [
+          {
+            "text": "MISSION 🎯",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "UpVote this Reef Reddit post. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph"
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "text": "Guide.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "1) Click on this ",
+            "type": "text"
+          },
+          {
+            "text": "link",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "rel": "noopener noreferrer nofollow",
+                  "href": "https://www.reddit.com/r/ReefDeFi/comments/1n5syfe/the_growing_list_of_exchanges_now_supporting/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button",
+                  "class": null,
+                  "target": "_blank"
+                }
+              }
+            ]
+          },
+          {
+            "text": " for the reddit article.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "2) Give this post a postive upvote.",
+            "type": "text"
+          },
+          {
+            "type": "hardBreak"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3
+        },
+        "content": [
+          {
+            "text": "SUBMISSION 📝",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Submit a screen shot of you upvote via zealy and claim the XP. ",
+            "type": "text"
+          },
+          {
+            "type": "hardBreak"
+          }
+        ]
+      }
+    ]
+  },
+  "canRetry": true,
+  "claimed": false,
+  "completed": false,
+  "inReview": false,
+  "claimLimit": 0,
+  "retryAfter": 0,
+  "recurrence": "once",
+  "conditions": [
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "165ffed7-3898-4346-a8f2-623b142b433b",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "0089699f-f937-43b4-b2e1-557f9f690a1f",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "quest",
+      "value": "bb5088aa-0ddc-48d1-b174-19d927f0ec52",
+      "operator": "isCompleted"
+    },
+    {
+      "fulfilled": true,
+      "type": "date",
+      "value": "2025-09-01T18:00:00.331Z",
+      "operator": ">"
+    }
+  ],
+  "conditionOperator": "AND",
+  "locked": false,
+  "opened": true
+}
