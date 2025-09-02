@@ -365,8 +365,26 @@ def check_x_match(account_name, x_link):
         with open(json_path) as f:
             links = json.load(f)
             logging.info(f"Found X links for {account_name}: {links}")
-        if x_link in links:
-            return links[x_link]  # Return the comment URL
+        
+        # Normalize the quest link by removing URL parameters
+        def normalize_x_url(url):
+            """Remove URL parameters and normalize X/Twitter URLs for comparison."""
+            if '?' in url:
+                url = url.split('?')[0]
+            # Normalize case for domain
+            url = url.lower().replace('twitter.com', 'x.com')
+            return url
+        
+        normalized_quest_link = normalize_x_url(x_link)
+        logging.info(f"Normalized quest link: {normalized_quest_link}")
+        
+        # Check for matches by normalizing stored URLs too
+        for stored_link, comment_url in links.items():
+            normalized_stored_link = normalize_x_url(stored_link)
+            logging.info(f"Comparing '{normalized_quest_link}' with '{normalized_stored_link}'")
+            if normalized_quest_link == normalized_stored_link:
+                logging.info(f"Found match! Quest link '{x_link}' matches stored link '{stored_link}'")
+                return comment_url
     return None
 
 def remove_claimed_link(account_name, instagram_link):
@@ -413,11 +431,29 @@ def remove_claimed_x_link(account_name, x_link):
             with open(json_path, 'r') as f:
                 links = json.load(f)
             
-            if x_link in links:
-                del links[x_link]
+            # Normalize the quest link by removing URL parameters
+            def normalize_x_url(url):
+                """Remove URL parameters and normalize X/Twitter URLs for comparison."""
+                if '?' in url:
+                    url = url.split('?')[0]
+                # Normalize case for domain
+                url = url.lower().replace('twitter.com', 'x.com')
+                return url
+            
+            normalized_quest_link = normalize_x_url(x_link)
+            
+            # Find the actual stored link that matches this quest link
+            link_to_remove = None
+            for stored_link in links.keys():
+                if normalize_x_url(stored_link) == normalized_quest_link:
+                    link_to_remove = stored_link
+                    break
+            
+            if link_to_remove:
+                del links[link_to_remove]
                 with open(json_path, 'w') as f:
                     json.dump(links, f, indent=2)
-                logging.info("[%s] Removed claimed X link from JSON: %s", account_name, x_link)
+                logging.info("[%s] Removed claimed X link from JSON: %s (matched with quest link: %s)", account_name, link_to_remove, x_link)
             else:
                 logging.warning("[%s] X link not found in JSON for removal: %s", account_name, x_link)
         except Exception as e:
